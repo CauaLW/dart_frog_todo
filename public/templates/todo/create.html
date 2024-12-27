@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Create TODO Item{% endblock %}
+{% block content %}
+<section class="container-fluid">
+    <h1 class="text-center">Create Item</h1>
+    <form action="create" method="post" class="d-flex flex-column align-items-end gap-2">
+        <input type="text" class="form-control" required name="description" id="description-input"
+            placeholder="Description">
+        <button type="submit" class="btn btn-outline-success">Create</button>
+    </form>
+</section>
+{% endblock %}

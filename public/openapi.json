@@ -1,0 +1,211 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Simple TODO Api with Dart Frog",
+    "description": "Simple TODO Api with Dart Frog",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "todo",
+      "description": "Operations about todo items"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "TodoItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/todo": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of todo items.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/TodoItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "todo"
+        ],
+        "requestBody": {
+          "description": "The item to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created todo item.",
+            "headers": {}
+          },
+          "500": {
+            "description": "Unexpected error."
+          }
+        }
+      }
+    },
+    "/api/todo/{id}": {
+      "get": {
+        "tags": [
+          "todo"
+        ],
+        "description": "Get an item based on key",
+        "responses": {
+          "200": {
+            "description": "The item.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "$ref": "#/components/schemas/TodoItem"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      },
+      "put": {
+        "tags": [
+          "todo"
+        ],
+        "description": "Updates an item.",
+        "requestBody": {
+          "description": "The data to updte",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "completed": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated item.",
+            "headers": {}
+          },
+          "500": {
+            "description": "Unexpected error."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      },
+      "delete": {
+        "tags": [
+          "todo"
+        ],
+        "responses": {
+          "200": {
+            "description": "Item successfully deleted"
+          },
+          "500": {
+            "description": "Unexpected error."
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": []
+      }
+    }
+  }
+}

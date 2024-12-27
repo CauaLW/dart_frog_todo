@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}TODO List{% endblock %}
+{% block content %}
+<section class="container-fluid">
+    <h1 class="text-center">Todo List</h1>
+    <form action="todo/create" class="mb-2">
+        <button type="submit" class="btn btn-outline-success">Create</button>
+    </form>
+    {% for item in items %}
+    <div class="d-flex flex-row align-items-center justify-content-between">
+        <h5 class="{{'text-decoration-line-through' if item['completed'] }} mb-0">{{ item['description'] }}</h5>
+        <div class="d-flex gap-3">
+            <form action="/todo/update/{{item['id']}}" method="post">
+                <input type="hidden" name="completed" value="{{ not item['completed'] }}">
+                <button type="submit" class="btn btn-outline-primary">
+                    {% if item['completed'] %}
+                    Unmark
+                    {% else %}
+                    Mark
+                    {% endif %}
+                </button>
+            </form>
+            <form action="/todo/delete/{{item['id']}}" method="post">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="bi bi-trash"></i>
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    {% if not loop.last %}
+    <hr>
+    {% endif %}
+    {% endfor %}
+</section>
+{% endblock %}
